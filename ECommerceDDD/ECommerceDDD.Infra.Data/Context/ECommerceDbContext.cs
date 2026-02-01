@@ -1,5 +1,6 @@
 ﻿using ECommerceDDD.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using ECommerceDDD.Infra.Data.EventSourcing;
 
 namespace ECommerceDDD.Infra.Data.Context
 {
@@ -10,7 +11,7 @@ namespace ECommerceDDD.Infra.Data.Context
 
         // DbSets (tabelas)
         public DbSet<Cliente> Clientes { get; set; }
-
+        public DbSet<StoredEvent> StoredEvents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Aplica todos os mapeamentos (que criaremos na próxima etapa)

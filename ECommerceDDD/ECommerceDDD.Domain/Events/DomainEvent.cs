@@ -4,12 +4,12 @@ namespace ECommerceDDD.Domain.Events
 {
     public abstract class DomainEvent : INotification
     {
-        public Guid AggregateId { get; protected set; }
-        public DateTime Timestamp { get; private set; }
+        public Guid Id { get; protected set; }
+        public DateTime Timestamp { get; protected set; }
 
-        protected DomainEvent(Guid aggregateId)
+        protected DomainEvent()
         {
-            AggregateId = aggregateId;
+            Id = Guid.NewGuid();
             Timestamp = DateTime.UtcNow;
         }
     }

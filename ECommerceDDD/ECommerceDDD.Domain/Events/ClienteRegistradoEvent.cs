@@ -2,7 +2,7 @@
 
 namespace ECommerceDDD.Domain.Events
 {
-    public class ClienteRegistradoEvent : INotification
+    public class ClienteRegistradoEvent : DomainEvent
     {
         public Guid Id { get; }
         public string Nome { get; }

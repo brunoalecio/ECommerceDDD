@@ -10,10 +10,11 @@ using ECommerceDDD.Domain.Events;
 using ECommerceDDD.Domain.Interfaces;
 using ECommerceDDD.Domain.ValueObjects;
 using MediatR;
+using ECommerceDDD.Domain.EventSourcing;
 
 namespace ECommerceDDD.Application.CommandHandlers
 {
-    public class ClienteCommandHandler :
+    public class ClienteCommandHandler : 
         IRequestHandler<RegisterNewClienteCommand, bool>,
         IRequestHandler<UpdateClienteCommand, bool>,
         IRequestHandler<RemoveClienteCommand, bool>
@@ -21,15 +22,18 @@ namespace ECommerceDDD.Application.CommandHandlers
         private readonly IClienteRepository _clienteRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator _mediator;
+        private readonly IEventStoreRepository _eventStoreRepository;
 
         public ClienteCommandHandler(
             IClienteRepository clienteRepository,
             IUnitOfWork unitOfWork,
-            IMediator mediator)
+            IMediator mediator,
+            IEventStoreRepository eventStoreRepository)
         {
             _clienteRepository = clienteRepository;
             _unitOfWork = unitOfWork;
             _mediator = mediator;
+            _eventStoreRepository = eventStoreRepository;
         }
 
         // CREATE
@@ -44,15 +48,16 @@ namespace ECommerceDDD.Application.CommandHandlers
 
             if (!success) return false;
 
-            await _mediator.Publish(
-                new ClienteRegistradoEvent(
-                    cliente.Id,
-                    cliente.Nome,
-                    cliente.Email.Address,
-                    cliente.DataNascimento
-                ),
-                cancellationToken
+            var evento = new ClienteRegistradoEvent(
+                cliente.Id,
+                cliente.Nome,
+                cliente.Email.Address,
+                cliente.DataNascimento
             );
+
+            _eventStoreRepository.Save(evento);
+
+            await _mediator.Publish(evento, cancellationToken);
 
             return true;
         }

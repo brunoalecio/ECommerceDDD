@@ -9,6 +9,8 @@ using ECommerceDDD.Infra.Data.Mongo;
 using ECommerceDDD.Infra.Data.Mongo.Repositories;
 using ECommerceDDD.Domain.Events;
 using ECommerceDDD.Infra.Data.EventHandlers;
+using ECommerceDDD.Domain.EventSourcing;
+using ECommerceDDD.Infra.Data.EventSourcing;
 
 using System.Reflection;
 
@@ -44,6 +46,7 @@ namespace ECommerceDDD.Infra.IoC.DependencyInjection
 
             // Event Handlers
             services.AddScoped<INotificationHandler<ClienteRegistradoEvent>, ClienteEventHandler>();
+            services.AddScoped<IEventStoreRepository, EventStoreRepository>();
         }
     }
 }
