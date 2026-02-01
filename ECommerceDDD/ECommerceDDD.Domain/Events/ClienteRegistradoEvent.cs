@@ -1,19 +1,24 @@
-﻿using ECommerceDDD.Domain.Entities;
+﻿using MediatR;
 
 namespace ECommerceDDD.Domain.Events
 {
-    public class ClienteRegistradoEvent : DomainEvent
+    public class ClienteRegistradoEvent : INotification
     {
+        public Guid Id { get; }
         public string Nome { get; }
         public string Email { get; }
         public DateTime DataNascimento { get; }
 
-        public ClienteRegistradoEvent(Cliente cliente)
-            : base(cliente.Id)
+        public ClienteRegistradoEvent(
+            Guid id,
+            string nome,
+            string email,
+            DateTime dataNascimento)
         {
-            Nome = cliente.Nome;
-            Email = cliente.Email.Address;
-            DataNascimento = cliente.DataNascimento;
+            Id = id;
+            Nome = nome;
+            Email = email;
+            DataNascimento = dataNascimento;
         }
     }
 }

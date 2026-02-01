@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ecommerce_sqlserver
+    environment:
+      SA_PASSWORD: "Pass123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - ecommerce-network
+
+  mongodb:
+    image: mongo:7
+    container_name: ecommerce_mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - ecommerce-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce_api
+    ports:
+      - "5000:8080"
+    depends_on:
+      - sqlserver
+      - mongodb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=ECommerceDDD;User Id=sa;Password=Pass123!;TrustServerCertificate=True;"
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge

@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<ProjectReference Include="..\ECommerceDDD.Domain\ECommerceDDD.Domain.csproj" />
 	<ProjectReference Include="..\ECommerceDDD.Infra.Data\ECommerceDDD.Infra.Data.csproj" />
+	<ProjectReference Include="..\ECommerceDDD.Application\ECommerceDDD.Application.csproj" />
+	
   </ItemGroup>
 
 </Project>
