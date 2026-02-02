@@ -1,6 +1,6 @@
 ﻿using ECommerceDDD.Domain.Events;
-using ECommerceDDD.Infra.Data.Mongo.Models;
-using ECommerceDDD.Infra.Data.Mongo.Repositories;
+using ECommerceDDD.Application.Interfaces;
+using ECommerceDDD.Application.ReadModels;
 using MediatR;
 
 namespace ECommerceDDD.Infra.Data.EventHandlers
@@ -8,9 +8,9 @@ namespace ECommerceDDD.Infra.Data.EventHandlers
     public class ClienteEventHandler :
         INotificationHandler<ClienteRegistradoEvent>
     {
-        private readonly ClienteReadRepository _clienteReadRepository;
+        private readonly IClienteReadRepository _clienteReadRepository;
 
-        public ClienteEventHandler(ClienteReadRepository clienteReadRepository)
+        public ClienteEventHandler(IClienteReadRepository clienteReadRepository)
         {
             _clienteReadRepository = clienteReadRepository;
         }

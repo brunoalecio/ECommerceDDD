@@ -13,6 +13,7 @@ using ECommerceDDD.Domain.EventSourcing;
 using ECommerceDDD.Infra.Data.EventSourcing;
 
 using System.Reflection;
+using ECommerceDDD.Application.Interfaces;
 
 
 namespace ECommerceDDD.Infra.IoC.DependencyInjection
@@ -43,10 +44,15 @@ namespace ECommerceDDD.Infra.IoC.DependencyInjection
                 ));
 
             services.AddScoped<ClienteReadRepository>();
+            services.AddScoped<IClienteReadRepository, ClienteReadRepository>();
 
             // Event Handlers
             services.AddScoped<INotificationHandler<ClienteRegistradoEvent>, ClienteEventHandler>();
             services.AddScoped<IEventStoreRepository, EventStoreRepository>();
+
+            
+
+
         }
     }
 }

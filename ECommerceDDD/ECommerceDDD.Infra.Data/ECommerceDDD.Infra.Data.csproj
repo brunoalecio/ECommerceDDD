@@ -15,6 +15,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
 	<ProjectReference Include="..\ECommerceDDD.Domain\ECommerceDDD.Domain.csproj" />
+	<ProjectReference Include="..\ECommerceDDD.Application\ECommerceDDD.Application.csproj" />
+	  
   </ItemGroup>
 
 </Project>

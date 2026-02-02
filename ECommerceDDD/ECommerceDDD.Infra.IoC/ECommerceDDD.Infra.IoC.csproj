@@ -14,6 +14,7 @@
 	<ProjectReference Include="..\ECommerceDDD.Domain\ECommerceDDD.Domain.csproj" />
 	<ProjectReference Include="..\ECommerceDDD.Infra.Data\ECommerceDDD.Infra.Data.csproj" />
 	<ProjectReference Include="..\ECommerceDDD.Application\ECommerceDDD.Application.csproj" />
+	  
 	
   </ItemGroup>
 

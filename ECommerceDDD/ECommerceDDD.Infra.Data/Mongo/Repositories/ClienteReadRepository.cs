@@ -1,9 +1,11 @@
-﻿using ECommerceDDD.Infra.Data.Mongo.Models;
+﻿using ECommerceDDD.Application.Interfaces;
+using ECommerceDDD.Application.ReadModels;
+using ECommerceDDD.Infra.Data.Mongo;
 using MongoDB.Driver;
 
 namespace ECommerceDDD.Infra.Data.Mongo.Repositories
 {
-    public class ClienteReadRepository
+    public class ClienteReadRepository : IClienteReadRepository
     {
         private readonly IMongoCollection<ClienteReadModel> _collection;
 
@@ -12,32 +14,23 @@ namespace ECommerceDDD.Infra.Data.Mongo.Repositories
             _collection = context.GetCollection<ClienteReadModel>("clientes");
         }
 
-        public async Task AddAsync(ClienteReadModel cliente)
+        public async Task<IEnumerable<ClienteReadModel>> GetAllAsync()
         {
-            await _collection.InsertOneAsync(cliente);
+            return await _collection
+                .Find(FilterDefinition<ClienteReadModel>.Empty)
+                .ToListAsync();
         }
 
-        public async Task UpdateAsync(ClienteReadModel cliente)
-        {
-            await _collection.ReplaceOneAsync(
-                c => c.Id == cliente.Id,
-                cliente,
-                new ReplaceOptions { IsUpsert = true }
-            );
-        }
-
-        public async Task<ClienteReadModel> GetByIdAsync(Guid id)
+        public async Task<ClienteReadModel?> GetByIdAsync(Guid id)
         {
             return await _collection
                 .Find(c => c.Id == id)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<ClienteReadModel>> GetAllAsync()
+        public async Task AddAsync(ClienteReadModel cliente)
         {
-            return await _collection
-                .Find(_ => true)
-                .ToListAsync();
+            await _collection.InsertOneAsync(cliente);
         }
     }
 }
